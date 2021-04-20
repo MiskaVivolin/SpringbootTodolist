@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"
+	th:href="@{css/bootstrap.min.css}" />
+<title>Server Programming</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
+<h1>This is your Todolist!</h1>
+
+<div class="col-md-4" style="padding:20px 0">
+		<form th:action="@{/logout}" method="post">
+			<input type="submit" value="Sign Out" class="btn btn-danger"/>
+		</form>
+		
+	</div>
+<table class="table table-hover">
+<thead>
+			<tr>
+				<th>Task</th>
+				<th>Date</th>
+				<th>Priority</th>
+				<th sec:authorize="hasAuthority('ADMIN')"> </th>
+			</tr>
+		</thead>
+	<tbody>
+	<tr th:each = "todo : ${todos}">
+	<td th:text="${todo.name}"></td>
+	<td th:text="${todo.date}"></td>
+	<td th:text="${todo.priority}"></td>
+	<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/delete/{id}(id=${todo.id})}" class="btn btn-danger">Delete</a></td>
+	<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/edit/{id}(id=${todo.id})}" class="btn btn-primary">Edit</a></td>
+	</tr>
+	</tbody>
+</table>
+<a href="/add" class="btn btn-primary">Add a task</a>
+<div th:if="${param.error}">
+ Invalid username and password.
+</div>
+<form th:action="@{/login}" method="post" class="col-md-4" style="padding:20px 0">
+ <label> User Name : <input type="text" name="username"/> </label>
+ <label> Password: <input type="password" name="password"/> </label>
+ <input type="submit" value="Sign In"/>
+</form>
+</body>
+</html>

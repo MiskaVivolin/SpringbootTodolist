@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"
+	th:href="@{css/bootstrap.min.css}" />
+<title>edit todo</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1>Modify a task</h1>
+<div>
+<form th:object="${todo}" th:action="@{../save}" action="#" method="post">
+<input type="hidden" id="id" th:field="*{id}"> <label
+				for="name">Todo</label> <input type="text" th:field="*{name}"
+				id="name"> <span
+				th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+				<label for="date">Date</label> <input type="text"
+				th:field="*{date}" id="date"> <span
+				th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></span> <label
+				for="priority">Priority</label> <input type="text" th:field="*{priority}"
+				id="priority" > <span
+				th:if="${#fields.hasErrors('priority')}" th:errors="*{priority}"></span> <label
+				></label>
+				<input class="button button-success" type="submit" value="Save">
+</form>
+</div>
+</body>
+</html>
